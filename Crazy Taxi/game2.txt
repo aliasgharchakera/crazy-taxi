@@ -125,34 +125,42 @@ void Game::run( )
 	CrazyTaxi CrazyTaxi(gRenderer, assets);
 	while( !quit )
 	{
-		//Handle events on queue
-		while( SDL_PollEvent( &e ) != 0 )
-		{
-
-			//User requests quit
-			if( e.type == SDL_QUIT )
-			{
-				quit = true;
-			}
-
-			if(e.type == SDL_MOUSEBUTTONDOWN){
+        if(e.type == SDL_MOUSEBUTTONDOWN){
 			//this is a good location to add pigeon in linked list.
-				int xMouse, yMouse;
-				SDL_GetMouseState(&xMouse,&yMouse);
-				// if (xMouse >= )
-				// gTexture = loadTexture("hulogo.png");
-				CrazyTaxi.createObject(xMouse, yMouse);
+            int xMouse, yMouse;
+            SDL_GetMouseState(&xMouse,&yMouse);
+            // if (xMouse >= )
+            gTexture = loadTexture("hulogo.png");
+            CrazyTaxi.createObject(xMouse, yMouse);
 			}
+		//Handle events on queue
+		// while( SDL_PollEvent( &e ) != 0 )
+		// {
 
-			if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_RIGHT){
-				CrazyTaxi.rightArrow();
-			}
-			if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_LEFT){
-				CrazyTaxi.leftArrow();
-			}
-			if(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_f)
-				CrazyTaxi.createTraffic();
-		}
+		// 	//User requests quit
+		// 	if( e.type == SDL_QUIT )
+		// 	{
+		// 		quit = true;
+		// 	}
+
+		// 	if(e.type == SDL_MOUSEBUTTONDOWN){
+		// 	//this is a good location to add pigeon in linked list.
+		// 		int xMouse, yMouse;
+		// 		SDL_GetMouseState(&xMouse,&yMouse);
+		// 		// if (xMouse >= )
+		// 		// gTexture = loadTexture("hulogo.png");
+		// 		CrazyTaxi.createObject(xMouse, yMouse);
+		// 	}
+
+		// 	if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_RIGHT){
+		// 		CrazyTaxi.rightArrow();
+		// 	}
+		// 	if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_LEFT){
+		// 		CrazyTaxi.leftArrow();
+		// 	}
+		// 	if(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_f)
+		// 		CrazyTaxi.createTraffic();
+		// }
 
 
 		SDL_RenderClear(gRenderer); //removes everything from renderer
