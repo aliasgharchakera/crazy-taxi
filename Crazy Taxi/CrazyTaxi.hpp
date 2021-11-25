@@ -24,6 +24,10 @@ class CrazyTaxi{
     void drawObjects();
     void createObject(int x, int y);
     void createTraffic();
+    void createLights();
+    void createObstacles();
+    void createTrees();
+    void probObjects();
     void rightArrow();
     void leftArrow();
     void deleteObj();

@@ -130,6 +130,7 @@ void Game::run( )
 		{
 
 			//User requests quit
+			CrazyTaxi.probObjects();
 			if( e.type == SDL_QUIT )
 			{
 				quit = true;
