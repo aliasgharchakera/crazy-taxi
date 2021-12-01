@@ -14,7 +14,6 @@ void CrazyTaxi::drawObjects(){
         o->draw();
 }
 
-
 CrazyTaxi::CrazyTaxi(SDL_Renderer *renderer, SDL_Texture *asst):gRenderer(renderer), assets(asst){
     SDL_Rect mov = {500, 500, 40, 60};
     // Taxi* t1 = new Taxi(gRenderer, assets, mov);
@@ -41,43 +40,68 @@ void CrazyTaxi::createObject(int x, int y){
 }
 
 void CrazyTaxi::createTraffic(){
-    int x, y;
-    x = rand () % 5; y = rand () % 5;
-    SDL_Rect mov = {200, 300, 30, 30};
+    int x = rand () % 3 + 1;
+    SDL_Rect mov;
+    if (x == 3)
+        mov = {200, 300, 30, 30};
+    else if (x == 2)
+        mov = {200, 300, 30, 30};
+    else 
+        mov = {200, 300, 30, 30};
     Traffic* v1 = new Traffic(gRenderer, assets, mov);
     vehicles.push_back(v1);
 }
 
 void CrazyTaxi::createLights(){
-    int x, y;
-    x = rand () % 5; y = rand () % 5;
-    SDL_Rect mov = {200, 300, 30, 30};
+    int x = rand () % 2 + 1;
+    SDL_Rect mov;
+    if (x == 2)
+        mov = {200, 300, 30, 30};
+    else
+        mov = {200, 300, 30, 30};
     StreetLight* l1 = new StreetLight(gRenderer, assets, mov);
     lights.push_back(l1);
 }
 
 void CrazyTaxi::createObstacles(){
-    int x, y;
-    x = rand () % 5; y = rand () % 5;
-    SDL_Rect mov = {200, 300, 30, 30};
+    int x = rand () % 3 + 1;
+    SDL_Rect mov;
+    if (x == 3)
+        mov = {200, 300, 30, 30};
+    else if (x == 2)
+        mov = {200, 300, 30, 30};
+    else 
+        mov = {200, 300, 30, 30};
     Obstacle* o1 = new Obstacle(gRenderer, assets, mov);
     obstacles.push_back(o1);
 }
 
 void CrazyTaxi::createTrees(){
-    int x, y;
-    x = rand () % 5; y = rand () % 5;
-    SDL_Rect mov = {200, 300, 30, 30};
+    int x = rand () % 2 + 1;
+    SDL_Rect mov;
+    if (x == 2)
+        mov = {200, 300, 30, 30};
+    else
+        mov = {200, 300, 30, 30};
     Tree* t1 = new Tree(gRenderer, assets, mov);
     trees.push_back(t1);
 }
 
 void CrazyTaxi::probObjects(){
-    int x; x = rand () % 5;
-    if (x%2 == 0)
+    int x = rand () % 2 + 1;
+    if (x == 2)
         createTraffic();
     else
         createObstacles();
+}
+
+bool CrazyTaxi::stats(){
+    points++; time--;
+    cout << "time left: " << time << endl;
+    if (time == 0){
+        gameOver = true;
+    }
+    return gameOver;
 }
 
 void CrazyTaxi::deleteObj(){

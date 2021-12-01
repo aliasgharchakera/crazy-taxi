@@ -17,18 +17,22 @@ class CrazyTaxi{
     list<StreetLight*> lights;
     Solar s1{gRenderer, assets, {1000, 50, 50, 50}};
     Taxi t1{gRenderer, assets, {500, 500, 50, 75}};
-    int time; int points;
+    int time = 30; int points = 0;
+    bool gameOver = false;
 
     public:
     CrazyTaxi(SDL_Renderer *, SDL_Texture *);
+    // ~CrazyTaxi();
     void drawObjects();
     void createObject(int x, int y);
+    void createObstacles();
     void createTraffic();
     void createLights();
-    void createObstacles();
     void createTrees();
     void probObjects();
     void rightArrow();
     void leftArrow();
     void deleteObj();
+    bool stats();
+    void endGame();
 };

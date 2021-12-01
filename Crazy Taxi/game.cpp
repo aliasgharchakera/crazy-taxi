@@ -1,6 +1,8 @@
 #include "game.hpp"
 #include "CrazyTaxi.hpp"
 #include<vector>
+
+
 bool Game::init()
 {
 	//Initialization flag
@@ -165,7 +167,9 @@ void Game::run( )
     	SDL_RenderPresent(gRenderer); //displays the updated renderer
 
 	    SDL_Delay(50);	//causes sdl engine to delay for specified miliseconds
+		if (CrazyTaxi.stats())
+			break;
 	}
-	CrazyTaxi.deleteObj();
-			
+	// delete CrazyTaxi;	
+	CrazyTaxi.deleteObj();	
 }

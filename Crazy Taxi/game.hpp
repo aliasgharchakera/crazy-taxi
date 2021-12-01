@@ -24,7 +24,7 @@ class Game{
     
 
 public:
-
+    void blit();
     bool init();
     bool loadMedia();
     void close();
