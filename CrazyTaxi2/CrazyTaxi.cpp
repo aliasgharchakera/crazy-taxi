@@ -6,46 +6,18 @@ void CrazyTaxi::drawObjects(){
     t1.draw();
     for (auto& v: vehicles){
         v->draw();
-        if (SDL_HasIntersection((v->getMover()), (t1.getMover()))){
-            cout << "crashed" << endl;
-            lives_2--;
-            lives.pop_back();
-            crashed = true;
-            if (lives_2 > 0){
-                deleteObj();
-                t1 = {gRenderer, assets, {500, 500, 70, 95}}; 
-                crashed = false;
-            }
+        if (v.)
         }
-    }
     for (auto& l: lights)
         l->draw();
     for (auto& t: trees)
         t->draw();
-    for (auto& l: lives)
-        l->draw();
-    for (auto& o: obstacles){
+    for (auto& o: obstacles)
         o->draw();
-        if (SDL_HasIntersection((o->getMover()), (t1.getMover()))){
-            // cout << "crashed" << endl;
-            lives_2--;
-            crashed = true;
-            if (lives_2 > 0){
-                deleteObj();
-                t1 = {gRenderer, assets, {500, 500, 70, 95}}; 
-                crashed = false;
-            }
-        }
-    }
 }
 
 CrazyTaxi::CrazyTaxi(SDL_Renderer *renderer, SDL_Texture *asst):gRenderer(renderer), assets(asst){
-    SDL_Rect mov = {5, 50, 30, 30};
-    for (int i = 0; i < 5; i++){
-        mov.x += 32;
-        Lives* l1 = new Lives(gRenderer, assets, mov);
-        lives.push_back(l1);
-    }
+    SDL_Rect mov = {500, 500, 40, 60};
     // Taxi* t1 = new Taxi(gRenderer, assets, mov);
     // taxis.push_back(t1);
 }
@@ -73,11 +45,11 @@ void CrazyTaxi::createTraffic(){
     int x = rand () % 3 + 1;
     SDL_Rect mov;
     if (x == 3)
-        mov = {521, 273, 60, 85};
+        mov = {200, 300, 30, 30};
     else if (x == 2)
-        mov = {480, 273, 60, 85};
+        mov = {200, 300, 30, 30};
     else 
-        mov = {400, 300, 60, 85};
+        mov = {200, 300, 30, 30};
     Traffic* v1 = new Traffic(gRenderer, assets, mov);
     vehicles.push_back(v1);
 }
@@ -86,9 +58,9 @@ void CrazyTaxi::createLights(){
     int x = rand () % 2 + 1;
     SDL_Rect mov;
     if (x == 2)
-        mov = {100, 300, 60, 85};
+        mov = {200, 300, 30, 30};
     else
-        mov = {500, 300, 60, 85};
+        mov = {200, 300, 30, 30};
     StreetLight* l1 = new StreetLight(gRenderer, assets, mov);
     lights.push_back(l1);
 }
@@ -97,11 +69,11 @@ void CrazyTaxi::createObstacles(){
     int x = rand () % 3 + 1;
     SDL_Rect mov;
     if (x == 3)
-        mov = {480, 273, 60, 85};
+        mov = {200, 300, 30, 30};
     else if (x == 2)
-        mov = {521, 273, 60, 85};
+        mov = {200, 300, 30, 30};
     else 
-        mov = {400, 300, 60, 85};
+        mov = {200, 300, 30, 30};
     Obstacle* o1 = new Obstacle(gRenderer, assets, mov);
     obstacles.push_back(o1);
 }
@@ -110,32 +82,27 @@ void CrazyTaxi::createTrees(){
     int x = rand () % 2 + 1;
     SDL_Rect mov;
     if (x == 2)
-        mov = {100, 300, 60, 85};
+        mov = {200, 300, 30, 30};
     else
-        mov = {500, 300, 60, 85};
+        mov = {200, 300, 30, 30};
     Tree* t1 = new Tree(gRenderer, assets, mov);
     trees.push_back(t1);
 }
 
 void CrazyTaxi::probObjects(){
-    int y = rand () % 50 + 1;
-    if (y%25 == 0){
-        int x = rand () % 2 + 1;
-        if (x == 2)
-            createTraffic();
-        else
-            createObstacles();
-    }
+    int x = rand () % 2 + 1;
+    if (x == 2)
+        createTraffic();
+    else
+        createObstacles();
 }
 
 bool CrazyTaxi::stats(){
-    points++; //time--;
-    // cout << "time left: " << time << endl;
+    points++; time--;
+    cout << "time left: " << time << endl;
     if (time == 0){
         gameOver = true;
     }
-    if (lives_2 < 0)
-        gameOver = true;
     return gameOver;
 }
 

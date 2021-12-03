@@ -12,10 +12,6 @@
             // case 2: src = {1559, 2, 632, 640};
         } 
     }
-
-    SDL_Rect* Traffic::getMover(){
-        return &mover;
-    }
 // drawing animations when the bullet hits the right edge
     void Traffic::draw(){
         if (mover.y == 300){

@@ -24,10 +24,6 @@
         p++;
         Unit::draw(src, mover);
     }
-
-    SDL_Rect* Obstacle::getMover(){
-        return &mover;
-    }
 // defining the animation function
     void Obstacle::animation(int n){
         switch (n){

@@ -1,8 +1,6 @@
 #include "game.hpp"
 #include "CrazyTaxi.hpp"
 #include<vector>
-
-
 bool Game::init()
 {
 	//Initialization flag
@@ -64,7 +62,7 @@ bool Game::loadMedia()
 	bool success = true;
 	
 	assets = loadTexture("assets4.png");
-    gTexture = loadTexture("bgDay.jpg");
+    gTexture = loadTexture("bg.png");
 	if(assets==NULL || gTexture==NULL)
     {
         printf("Unable to run due to error: %s\n",SDL_GetError());
@@ -127,37 +125,43 @@ void Game::run( )
 	CrazyTaxi CrazyTaxi(gRenderer, assets);
 	while( !quit )
 	{
-		//Handle events on queue
-		while( SDL_PollEvent( &e ) != 0 )
-		{
-
-			//User requests quit
-			if( e.type == SDL_QUIT )
-			{
-				quit = true;
-			}
-
-			if(e.type == SDL_MOUSEBUTTONDOWN){
+        if(e.type == SDL_MOUSEBUTTONDOWN){
 			//this is a good location to add pigeon in linked list.
-				int xMouse, yMouse;
-				SDL_GetMouseState(&xMouse,&yMouse);
-				// if (xMouse >= )
-				// gTexture = loadTexture("hulogo.png");
-				CrazyTaxi.createObject(xMouse, yMouse);
+            int xMouse, yMouse;
+            SDL_GetMouseState(&xMouse,&yMouse);
+            // if (xMouse >= )
+            gTexture = loadTexture("hulogo.png");
+            CrazyTaxi.createObject(xMouse, yMouse);
 			}
+		//Handle events on queue
+		// while( SDL_PollEvent( &e ) != 0 )
+		// {
 
-			if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_RIGHT){
-				CrazyTaxi.rightArrow();
-			}
-			if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_LEFT){
-				CrazyTaxi.leftArrow();
-			}
-		}
-		CrazyTaxi.probObjects();
-		if (CrazyTaxi.s1.n == 0)
-			gTexture = loadTexture("bgDay.jpg");
-		else
-			gTexture = loadTexture("bgNight.jpg");
+		// 	//User requests quit
+		// 	if( e.type == SDL_QUIT )
+		// 	{
+		// 		quit = true;
+		// 	}
+
+		// 	if(e.type == SDL_MOUSEBUTTONDOWN){
+		// 	//this is a good location to add pigeon in linked list.
+		// 		int xMouse, yMouse;
+		// 		SDL_GetMouseState(&xMouse,&yMouse);
+		// 		// if (xMouse >= )
+		// 		// gTexture = loadTexture("hulogo.png");
+		// 		CrazyTaxi.createObject(xMouse, yMouse);
+		// 	}
+
+		// 	if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_RIGHT){
+		// 		CrazyTaxi.rightArrow();
+		// 	}
+		// 	if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_LEFT){
+		// 		CrazyTaxi.leftArrow();
+		// 	}
+		// 	if(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_f)
+		// 		CrazyTaxi.createTraffic();
+		// }
+
 
 		SDL_RenderClear(gRenderer); //removes everything from renderer
 		SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);//Draws background to renderer
@@ -168,9 +172,7 @@ void Game::run( )
     	SDL_RenderPresent(gRenderer); //displays the updated renderer
 
 	    SDL_Delay(50);	//causes sdl engine to delay for specified miliseconds
-		if (CrazyTaxi.stats())
-			break;
 	}
-	// delete CrazyTaxi;	
-	CrazyTaxi.deleteObj();	
+	CrazyTaxi.deleteObj();
+			
 }

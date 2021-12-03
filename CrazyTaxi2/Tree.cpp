@@ -1,10 +1,10 @@
-#include "Obstacle.hpp"    
+#include "Tree.hpp"    
 
-    Obstacle::Obstacle(SDL_Renderer* rend, SDL_Texture* ast, SDL_Rect mov): Unit(rend, ast), mover(mov){
+    Tree::Tree(SDL_Renderer* rend, SDL_Texture* ast, SDL_Rect mov): Unit(rend, ast), mover(mov){
         src = {1559, 2, 632, 640};
     }
 // drawing animations when the bullet hits the right edge
-    void Obstacle::draw(){
+    void Tree::draw(){
         if (p%10 == 0){
             if (mover.x == 0){
                     if (n == 1)
@@ -24,12 +24,8 @@
         p++;
         Unit::draw(src, mover);
     }
-
-    SDL_Rect* Obstacle::getMover(){
-        return &mover;
-    }
 // defining the animation function
-    void Obstacle::animation(int n){
+    void Tree::animation(int n){
         switch (n){
         case 0: src = {1559, 1, 632, 640};
         mover.w = 50; mover.h = 50;

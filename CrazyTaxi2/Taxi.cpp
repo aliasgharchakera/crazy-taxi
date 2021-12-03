@@ -19,18 +19,12 @@
         Unit::draw(src, mover);
     }
 
-    SDL_Rect* Taxi::getMover(){
-        return &mover;
-    }
-
     void Taxi::rightArrow(){
-        if (mover.x < 900)
-            mover.x += 20;
+        mover.x += 100;
     }
 
     void Taxi::leftArrow(){
-        if (mover.x > 10)
-            mover.x -= 20;
+        mover.x -= 100;
     }
 // defining the animation function
     void Taxi::animation(int n){

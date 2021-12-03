@@ -1,10 +1,10 @@
-#include "Obstacle.hpp"    
+#include "Solar.hpp"    
 
-    Obstacle::Obstacle(SDL_Renderer* rend, SDL_Texture* ast, SDL_Rect mov): Unit(rend, ast), mover(mov){
-        src = {1559, 2, 632, 640};
+    Solar::Solar(SDL_Renderer* rend, SDL_Texture* ast, SDL_Rect mov): Unit(rend, ast), mover(mov){
+        src = {1, 509, 100, 101};
     }
 // drawing animations when the bullet hits the right edge
-    void Obstacle::draw(){
+    void Solar::draw(){
         if (p%10 == 0){
             if (mover.x == 0){
                     if (n == 1)
@@ -24,19 +24,15 @@
         p++;
         Unit::draw(src, mover);
     }
-
-    SDL_Rect* Obstacle::getMover(){
-        return &mover;
-    }
 // defining the animation function
-    void Obstacle::animation(int n){
+    void Solar::animation(int n){
         switch (n){
-        case 0: src = {1559, 1, 632, 640};
+        case 0: src = {1, 509, 100, 101};
         mover.w = 50; mover.h = 50;
         mover.x = 1000;
         mover.y = 50;
         break;
-        case 1: src = {475, 2, 1081, 1170};
+        case 1: src = {531, 188, 100, 101};
         mover.w = 45; mover.h = 45;
         mover.x = 1000;
         mover.y = 50;

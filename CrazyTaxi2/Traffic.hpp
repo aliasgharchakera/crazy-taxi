@@ -7,7 +7,7 @@ class Traffic: public Unit{
     int n = 0;
     public:
     Traffic(SDL_Renderer* rend, SDL_Texture* ast, SDL_Rect mov);
-    SDL_Rect* getMover();
+
     void draw();
     // declaring a function to add animations when the bullet hits the right edge
     void animation(int);

@@ -5,7 +5,6 @@
 #include "Obstacle.hpp"
 #include "Tree.hpp"
 #include "StreetLight.hpp"
-#include "Lives.hpp"
 #include<list>
 using namespace std;
 class CrazyTaxi{
@@ -16,11 +15,9 @@ class CrazyTaxi{
     list<Obstacle*> obstacles;
     list<Tree*> trees;
     list<StreetLight*> lights;
-    list<Lives*> lives;
-    Taxi t1{gRenderer, assets, {500, 500, 70, 95}};
-    int time = 30; int points = 0; int lives_2 = 5;
-    bool gameOver = false; bool crashed = false;
-
+    Taxi t1{gRenderer, assets, {500, 500, 50, 75}};
+    int time = 30; int points = 0;
+    bool gameOver = false; bool day = false;
 
     public:
     Solar s1{gRenderer, assets, {1000, 50, 50, 50}};
@@ -38,5 +35,4 @@ class CrazyTaxi{
     void deleteObj();
     bool stats();
     void endGame();
-    void livesLeft();
 };
