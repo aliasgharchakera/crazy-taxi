@@ -59,25 +59,20 @@ void CrazyTaxi::leftArrow(){
 }
 
 void CrazyTaxi::createObject(int x, int y){
-    // let's make a rectangel on x, y of the size 30, 10
-    // SDL_Rect mov = {x, y, 90, 30};
-    // Solar* s1 = new Solar(gRenderer, assets, mov);
-    // Taxi* t1 = new Taxi(gRenderer, assets, mov);
-    // solars.push_back(s1);
-    // taxis.push_back(t1);
-    //delete t1;
     std::cout<<"Mouse clicked at: "<<x<<" -- "<<y<<std::endl;
 }
 
 void CrazyTaxi::createTraffic(){
     int x = rand () % 3 + 1;
     SDL_Rect mov;
-    if (x == 3)
-        mov = {521, 273, 60, 85};
+    if (x == 4)
+        mov = {600, 300, 10, 12};
+    else if (x == 3)
+        mov = {521, 273, 10, 12};
     else if (x == 2)
-        mov = {480, 273, 60, 85};
+        mov = {487, 273, 10, 12};
     else 
-        mov = {400, 300, 60, 85};
+        mov = {400, 300, 10, 12};
     Traffic* v1 = new Traffic(gRenderer, assets, mov);
     vehicles.push_back(v1);
 }
@@ -119,7 +114,7 @@ void CrazyTaxi::createTrees(){
 
 void CrazyTaxi::probObjects(){
     int y = rand () % 50 + 1;
-    if (y%25 == 0){
+    if (y%10 == 0){
         int x = rand () % 2 + 1;
         if (x == 2)
             createTraffic();

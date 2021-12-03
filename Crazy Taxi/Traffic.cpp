@@ -18,13 +18,30 @@
     }
 // drawing animations when the bullet hits the right edge
     void Traffic::draw(){
-        if (mover.y == 300){
-            if (n == 10)
-                n = 0;
-            else{
-                mover.w += 2; mover.h += 2;
-                n++;
-            }
+        if (n == 10)
+            n = 0;
+        else{
+            mover.w += 1; mover.h += 1;
+            n++;
+        }
+
+        if (mover.y > 320)
+            if (mover.y > 350)
+                mover.y += 2;
+            mover.y += 2;
+        if (mover.x > 500){
+            int x = rand () % 3 + 1;
+            if (x == 1)
+                mover.x += 2;
+            else if (x == 2)
+                mover.x += 4;
+        }
+        else{
+            int x = rand () % 3 + 1;
+            if (x == 1)
+                mover.x -= 2;
+            else if (x == 2)
+                mover.x -= 4;
         }
         mover.y += 1;
         Unit::draw(src, mover);
