@@ -9,6 +9,7 @@ class Obstacle: public Unit{
     Obstacle(SDL_Renderer* rend, SDL_Texture* ast, SDL_Rect mov);
     SDL_Rect* getMover();
     void draw();
+    bool OutofFrame();
     // declaring a function to add animations when the bullet hits the right edge
     void animation(int);
     // SDL_Rect position();

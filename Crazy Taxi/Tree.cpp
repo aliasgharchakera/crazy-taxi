@@ -24,6 +24,12 @@
         p++;
         Unit::draw(src, mover);
     }
+
+    bool Tree::OutofFrame(){
+        if (mover.y > 600)
+            return true;
+        return false;
+    }
 // defining the animation function
     void Tree::animation(int n){
         switch (n){

@@ -17,7 +17,7 @@ class CrazyTaxi{
     list<Tree*> trees;
     list<StreetLight*> lights;
     list<Lives*> lives;
-    Taxi t1{gRenderer, assets, {500, 500, 70, 95}};
+    Taxi t1{gRenderer, assets, {465, 500, 75, 90}};
     int time = 30; int points = 0; int lives_2 = 5;
     bool gameOver = false; bool crashed = false;
 
@@ -36,6 +36,10 @@ class CrazyTaxi{
     void rightArrow();
     void leftArrow();
     void deleteObj();
+    // void deleteLight(StreetLight&);
+    // void deleteObstacle(Obstacle&);
+    // void deleteTraffic(Traffic&);
+    // void deleteTree(Tree&);
     bool stats();
     void endGame();
     void livesLeft();

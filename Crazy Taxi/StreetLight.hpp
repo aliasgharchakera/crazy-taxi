@@ -11,5 +11,6 @@ class StreetLight: public Unit{
     void draw();
     // declaring a function to add animations when the bullet hits the right edge
     void animation(int);
+    bool OutofFrame();
     // SDL_Rect position();
 };

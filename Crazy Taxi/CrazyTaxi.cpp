@@ -5,35 +5,52 @@ void CrazyTaxi::drawObjects(){
     s1.draw();
     t1.draw();
     for (auto& v: vehicles){
-        v->draw();
-        if (SDL_HasIntersection((v->getMover()), (t1.getMover()))){
-            cout << "crashed" << endl;
-            lives_2--;
-            lives.pop_back();
-            crashed = true;
-            if (lives_2 > 0){
-                deleteObj();
-                t1 = {gRenderer, assets, {500, 500, 70, 95}}; 
-                crashed = false;
+        if (v->OutofFrame())
+            delete v;
+        else{
+            v->draw();
+            if (SDL_HasIntersection((v->getMover()), (t1.getMover()))){
+                cout << "crashed" << endl;
+                lives_2--;
+                lives.pop_back();
+                crashed = true;
+                if (lives_2 > 0){
+                    deleteObj();
+                    t1 = {gRenderer, assets, {500, 500, 70, 95}}; 
+                    crashed = false;
+                }
             }
         }
     }
-    for (auto& l: lights)
+    for (auto& l: lights){
+        if (l->OutofFrame())
+            delete l;
+        else
+            l->draw();
+    }
+    for (auto& t: trees){
+        if (t->OutofFrame())
+            delete t;
+        else
+            t->draw();
+    }
+    for (auto& l: lives){
         l->draw();
-    for (auto& t: trees)
-        t->draw();
-    for (auto& l: lives)
-        l->draw();
+    }
     for (auto& o: obstacles){
-        o->draw();
-        if (SDL_HasIntersection((o->getMover()), (t1.getMover()))){
-            // cout << "crashed" << endl;
-            lives_2--;
-            crashed = true;
-            if (lives_2 > 0){
-                deleteObj();
-                t1 = {gRenderer, assets, {500, 500, 70, 95}}; 
-                crashed = false;
+        if (o->OutofFrame())
+            delete o;
+        else{
+            o->draw();
+            if (SDL_HasIntersection((o->getMover()), (t1.getMover()))){
+                // cout << "crashed" << endl;
+                lives_2--;
+                crashed = true;
+                if (lives_2 > 0){
+                    deleteObj();
+                    t1 = {gRenderer, assets, {500, 500, 70, 95}}; 
+                    crashed = false;
+                }
             }
         }
     }
@@ -133,6 +150,22 @@ bool CrazyTaxi::stats(){
         gameOver = true;
     return gameOver;
 }
+
+// void CrazyTaxi::deleteTraffic(Traffic& t1){
+//     delete t1;
+// }
+
+// void CrazyTaxi::deleteObstacle(Obstacle& o1){
+//     delete o1;
+// }
+
+// void CrazyTaxi::deleteTree(Tree& t1){
+//     delete t1;
+// }
+
+// void CrazyTaxi::deleteLight(StreetLight& l1){
+//     delete l1;
+// }
 
 void CrazyTaxi::deleteObj(){
     for (auto& v: vehicles)

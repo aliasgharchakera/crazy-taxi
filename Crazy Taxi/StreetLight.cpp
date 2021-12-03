@@ -24,6 +24,12 @@
         p++;
         Unit::draw(src, mover);
     }
+
+    bool StreetLight::OutofFrame(){
+        if (mover.y > 600)
+            return true;
+        return false;
+    }
 // defining the animation function
     void StreetLight::animation(int n){
         switch (n){

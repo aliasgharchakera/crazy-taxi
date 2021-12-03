@@ -24,12 +24,12 @@
     }
 
     void Taxi::rightArrow(){
-        if (mover.x < 900)
+        if (mover.x < 725)
             mover.x += 20;
     }
 
     void Taxi::leftArrow(){
-        if (mover.x > 10)
+        if (mover.x > 200)
             mover.x -= 20;
     }
 // defining the animation function

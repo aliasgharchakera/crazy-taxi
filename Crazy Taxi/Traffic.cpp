@@ -30,21 +30,31 @@
                 mover.y += 2;
             mover.y += 2;
         if (mover.x > 500){
-            int x = rand () % 3 + 1;
+            int x = rand () % 4 + 1;
             if (x == 1)
                 mover.x += 2;
             else if (x == 2)
                 mover.x += 4;
+            else if (x == 3)
+                mover.x -= 4;
         }
         else{
-            int x = rand () % 3 + 1;
+            int x = rand () % 4 + 1;
             if (x == 1)
                 mover.x -= 2;
             else if (x == 2)
                 mover.x -= 4;
+            else if (x == 3)
+                mover.x += 4;
         }
         mover.y += 1;
         Unit::draw(src, mover);
+    }
+
+    bool Traffic::OutofFrame(){
+        if (mover.y > 600)
+            return true;
+        return false;
     }
 // defining the animation function
     void Traffic::animation(int n){

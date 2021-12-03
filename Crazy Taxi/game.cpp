@@ -154,10 +154,14 @@ void Game::run( )
 			}
 		}
 		CrazyTaxi.probObjects();
-		if (CrazyTaxi.s1.n == 0)
+		if (CrazyTaxi.s1.n == 0 && day == 1){
 			gTexture = loadTexture("bgDay.jpg");
-		else
+			day = 0;
+		}
+		else if (CrazyTaxi.s1.n == 1 && day == 0){
 			gTexture = loadTexture("bgNight.jpg");
+			day = 1;
+		}
 
 		SDL_RenderClear(gRenderer); //removes everything from renderer
 		SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);//Draws background to renderer

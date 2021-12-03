@@ -5,7 +5,7 @@
     }
 // drawing animations when the bullet hits the right edge
     void Solar::draw(){
-        if (p%10 == 0){
+        if (p%5 == 0){
             if (mover.x == 0){
                     if (n == 1)
                         n = 0;

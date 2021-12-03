@@ -28,6 +28,12 @@
     SDL_Rect* Obstacle::getMover(){
         return &mover;
     }
+
+    bool Obstacle::OutofFrame(){
+        if (mover.y > 600)
+            return true;
+        return false;
+    }
 // defining the animation function
     void Obstacle::animation(int n){
         switch (n){
