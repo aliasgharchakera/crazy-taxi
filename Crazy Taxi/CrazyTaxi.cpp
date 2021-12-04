@@ -18,8 +18,7 @@ void CrazyTaxi::drawObjects(){
                 crashed = true;
                 if (lives_2 > 0){
                     deleteObj();
-                    t1 = {gRenderer, assets, {500, 500, 70, 95}}; 
-                    crashed = false;
+                    t1 = {gRenderer, assets, {500, 500, 70, 95}};
                 }
             }
         }

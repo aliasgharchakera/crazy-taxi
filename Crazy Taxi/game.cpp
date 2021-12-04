@@ -2,7 +2,9 @@
 #include "CrazyTaxi.hpp"
 #include<vector>
 Mix_Music *bgMusic = NULL;
-
+Mix_Music *menuMusic = NULL;
+Mix_Chunk *gCrash = NULL;
+Mix_Chunk *gGameOver = NULL;
 void Game::rules(){
 		screen = SDL_GetWindowSurface(gWindow);
 		rules_called = true;
@@ -89,11 +91,22 @@ bool Game::loadMedia()
         success =false;
     }
 	bgMusic = Mix_LoadMUS( "beat.wav" );
-
 	if(bgMusic == NULL){
 		printf("Unable to load music: %s \n", Mix_GetError());
 		success = false;
 	}
+	menuMusic = Mix_LoadMUS( "music1.mp3");
+	if(menuMusic == NULL){
+		printf("Unable to load music: %s \n", Mix_GetError());
+		success = false;
+	}
+	//Load sound effects
+    gCrash = Mix_LoadWAV( "crash.wav" );
+    if( gCrash == NULL )
+    {
+        printf( "Failed to load crash sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
+        success = false;
+    }
 
 	return success;
 }
@@ -110,8 +123,17 @@ void Game::close()
 	SDL_DestroyWindow( gWindow );
 	gWindow = NULL;
 	gRenderer = NULL;
+	// free the music
 	Mix_FreeMusic(bgMusic);
+	Mix_FreeMusic(menuMusic);
 	bgMusic = NULL;
+	menuMusic = NULL;
+	//Free the sound effects
+    Mix_FreeChunk( gCrash );
+    Mix_FreeChunk( gGameOver );
+    gCrash = NULL;
+    gGameOver = NULL;
+
 	// Quit SDL subsystems
 	IMG_Quit();
 	Mix_Quit();
@@ -213,7 +235,11 @@ void Game::run( )
 				// if (xMouse >= )
 				// gTexture = loadTexture("hulogo.png");
 				CrazyTaxi.createObject(xMouse, yMouse);
-				if (xMouse>100 && xMouse<375 && yMouse>350 && yMouse<470) maingame();
+				if (xMouse>100 && xMouse<375 && yMouse>350 && yMouse<470){
+					maingame();
+					Mix_PauseMusic();
+					Mix_PlayMusic( bgMusic, 2 );
+				}
 				if (xMouse>660 && xMouse<930 && yMouse>375 && yMouse<470) rules();
 			}
 			else if (e.type == SDL_KEYDOWN){
@@ -224,11 +250,6 @@ void Game::run( )
 					CrazyTaxi.leftArrow();
 			}
 		
-		}
-		if( Mix_PlayingMusic() == 0 )
-		{
-			//Play the music
-			Mix_PlayMusic( bgMusic, 2 );
 		}
 		// CrazyTaxi.probObjects();
 		if (CrazyTaxi.s1.n == 0 && day == 1){
@@ -249,10 +270,21 @@ void Game::run( )
 			CrazyTaxi.drawLogo();
 			CrazyTaxi.drawStart();
 			CrazyTaxi.drawRules();
+			if( Mix_PlayingMusic() == 0 )
+			{
+				//Play the music
+				Mix_PlayMusic( menuMusic, 2 );
+			}
 		}
 
 		else if (maingame_called==true && rules_called==false){
+			if (Mix_PlayingMusic() == 0)
+				Mix_PlayMusic( menuMusic, 2 );
 			CrazyTaxi.drawObjects();
+			if (CrazyTaxi.crashed){
+				Mix_PlayChannel( -1, gCrash, 0 );
+				CrazyTaxi.crashed = false;
+			}
 			CrazyTaxi.probObjects();
 			if (CrazyTaxi.stats())
 				break;

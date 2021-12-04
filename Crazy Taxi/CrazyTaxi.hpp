@@ -29,10 +29,11 @@ class CrazyTaxi{
     list<Lives*> lives;
     Taxi t1{gRenderer, assets, {465, 500, 75, 90}};
     int time = 30; int points = 0; int lives_2 = 5;
-    bool gameOver = false; bool crashed = false;
+    bool gameOver = false;
 
 
     public:
+    bool crashed = false;
     Solar s1{gRenderer, assets, {1000, 50, 50, 50}};
     CrazyTaxi(SDL_Renderer *, SDL_Texture *);
     // ~CrazyTaxi();
@@ -41,7 +42,7 @@ class CrazyTaxi{
     void drawRules();
     void drawInstructions();
     void drawLogo();
-    
+
     void drawObjects();
     void createObject(int x, int y);
     void createObstacles();
