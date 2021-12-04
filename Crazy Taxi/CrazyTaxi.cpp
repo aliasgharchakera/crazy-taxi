@@ -12,7 +12,7 @@ void CrazyTaxi::drawObjects(){
         else{
             v->draw();
             if (SDL_HasIntersection((v->getMover()), (t1.getMover()))){
-                cout << "crashed" << endl;
+                // cout << "crashed" << endl;
                 lives_2--;
                 lives.pop_back();
                 crashed = true;
@@ -20,6 +20,8 @@ void CrazyTaxi::drawObjects(){
                     deleteObj();
                     t1 = {gRenderer, assets, {500, 500, 70, 95}};
                 }
+                else
+                    gameOver = true;
             }
         }
     }
@@ -52,9 +54,10 @@ void CrazyTaxi::drawObjects(){
                 crashed = true;
                 if (lives_2 > 0){
                     deleteObj();
-                    t1 = {gRenderer, assets, {500, 500, 70, 95}}; 
-                    crashed = false;
+                    t1 = {gRenderer, assets, {500, 500, 70, 95}};
                 }
+                else
+                    gameOver = true;
             }
         }
     }
@@ -160,6 +163,7 @@ void CrazyTaxi::createTrees(){
 void CrazyTaxi::probObjects(){
     int y = rand () % 50 + 1;
     if (y%15 == 0){
+        points += 5;
         int x = rand () % 3 + 1;
         if (x == 2)
             createObstacles();
@@ -172,31 +176,15 @@ void CrazyTaxi::probObjects(){
 //     return to_string(points);
 // }
 
-bool CrazyTaxi::stats(){
-    // points++; //time--;
-    // cout << "time left: " << time << endl;
-    if (time == 0){
-        gameOver = true;
-    }
-    if (lives_2 < 0)
-        gameOver = true;
-    return gameOver;
-}
-
-// void CrazyTaxi::deleteTraffic(Traffic& t1){
-//     delete t1;
-// }
-
-// void CrazyTaxi::deleteObstacle(Obstacle& o1){
-//     delete o1;
-// }
-
-// void CrazyTaxi::deleteTree(Tree& t1){
-//     delete t1;
-// }
-
-// void CrazyTaxi::deleteLight(StreetLight& l1){
-//     delete l1;
+// bool CrazyTaxi::stats(){
+//     // points++; //time--;
+//     // cout << "time left: " << time << endl;
+//     if (time == 0){
+//         gameOver = true;
+//     }
+//     if (lives_2 < 0)
+//         gameOver = true;
+//     return gameOver;
 // }
 
 void CrazyTaxi::deleteObj(){
@@ -213,5 +201,4 @@ void CrazyTaxi::deleteObj(){
         delete o;
     obstacles.clear();
     cout << "delete called" << endl;
-    cout << points << endl;
 }

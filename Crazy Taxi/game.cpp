@@ -92,7 +92,7 @@ bool Game::loadMedia()
         printf("Unable to run due to error: %s\n",SDL_GetError());
         success =false;
     }
-	bgMusic = Mix_LoadMUS( "beat.wav" );
+	bgMusic = Mix_LoadMUS( "wackyrace.wav" );
 	if(bgMusic == NULL){
 		printf("Unable to load music: %s \n", Mix_GetError());
 		success = false;
@@ -287,7 +287,7 @@ void Game::run( )
 		//***********************draw the objects here********************
 		// CrazyTaxi.draw();
 		// CrazyTaxi.drawObjects();
-		if (maingame_called==false && rules_called==false){
+		if (maingame_called==false && rules_called==false && restartgame_called == false){
 			CrazyTaxi.drawLogo();
 			CrazyTaxi.drawStart();
 			CrazyTaxi.drawRules();
@@ -301,15 +301,21 @@ void Game::run( )
 		else if (maingame_called==true && rules_called==false && restartgame_called == false){
 			if (Mix_PlayingMusic() == 0)
 				Mix_PlayMusic( bgMusic, 2 );
+			CrazyTaxi.probObjects();
 			CrazyTaxi.drawObjects();
 			if (CrazyTaxi.crashed){
 				Mix_PlayChannel( -1, gCrash, 0 );
 				CrazyTaxi.crashed = false;
 			}
-			CrazyTaxi.probObjects();
-			if (CrazyTaxi.stats()){
+			if (CrazyTaxi.gameOver){
 				maingame_called = false; restartgame_called = true;
+				CrazyTaxi.gameOver = false;
+				cout << "----------GAME OVER----------" << endl;
+				cout << "Points: " << CrazyTaxi.points << endl;
 			}
+			// if (CrazyTaxi.stats()){
+			// 	maingame_called = false; restartgame_called = true;
+			// }
 		} 
 		else if (rules_called==true && maingame_called==false && restartgame_called == false) {
 			CrazyTaxi.drawInstructions();
@@ -330,9 +336,10 @@ void Game::run( )
 			if (e.type == SDL_MOUSEBUTTONDOWN){
 				int xMouse, yMouse;
 				SDL_GetMouseState(&xMouse,&yMouse);
-				if (xMouse>50 && xMouse<200 && yMouse>100 && yMouse<200){
+				if (xMouse>425 && xMouse<575 && yMouse>400 && yMouse<500){
 					restartgame_called=false;
-					maingame_called=true;
+					maingame_called=false;
+					break;
 				} 
 			}
 		}
@@ -341,7 +348,7 @@ void Game::run( )
 
 	    SDL_Delay(50);	//causes sdl engine to delay for specified miliseconds
 	}
-	// delete CrazyTaxi;	
+	// delete CrazyTaxi;
 	CrazyTaxi.deleteObj();
 
 }
