@@ -5,6 +5,8 @@
 #include <string>
 #include <stdlib.h>
 #include <time.h>
+#include <SDL_mixer.h>
+#include <SDL_ttf.h>
 
 class Game{
     //Screen dimension constants
@@ -22,6 +24,11 @@ class Game{
     SDL_Texture* gTexture = NULL;
     //global reference to png image sheets
     SDL_Texture* assets=NULL;
+    SDL_Surface *screen = NULL;
+
+    std::string cur_string = " ";
+
+    int cur_time=0,start_time=time(0);
     
 
 public:
@@ -29,7 +36,16 @@ public:
     bool init();
     bool loadMedia();
     void close();
+    
+    bool rules_called;
+    bool maingame_called;
+    void rules();
+    void maingame();
+
     SDL_Texture* loadTexture( std::string path );
+    SDL_Texture* get_gTexture();
+
     void run();
+    void write(std::string s);
 };
 

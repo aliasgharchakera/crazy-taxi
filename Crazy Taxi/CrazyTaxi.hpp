@@ -6,9 +6,19 @@
 #include "Tree.hpp"
 #include "StreetLight.hpp"
 #include "Lives.hpp"
+#include "start_game.hpp"
+#include "rules.hpp"
+#include "rules_button.hpp"
+#include "logo.hpp"
+#include "back_button.hpp"
 #include<list>
 using namespace std;
 class CrazyTaxi{
+    Start_Game p1;
+    rules_button p2;
+    logo l1;
+    rules r;
+    back_button b;
     // list<Taxi*> taxis;
     SDL_Renderer *gRenderer;
     SDL_Texture *assets;
@@ -26,6 +36,12 @@ class CrazyTaxi{
     Solar s1{gRenderer, assets, {1000, 50, 50, 50}};
     CrazyTaxi(SDL_Renderer *, SDL_Texture *);
     // ~CrazyTaxi();
+    void drawStart();
+    void drawBack();
+    void drawRules();
+    void drawInstructions();
+    void drawLogo();
+    
     void drawObjects();
     void createObject(int x, int y);
     void createObstacles();
@@ -43,4 +59,5 @@ class CrazyTaxi{
     bool stats();
     void endGame();
     void livesLeft();
+    // string getPoints();
 };

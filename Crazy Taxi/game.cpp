@@ -1,7 +1,21 @@
 #include "game.hpp"
 #include "CrazyTaxi.hpp"
 #include<vector>
+Mix_Music *bgMusic = NULL;
 
+void Game::rules(){
+		screen = SDL_GetWindowSurface(gWindow);
+		rules_called = true;
+		maingame_called==false;
+		SDL_FreeSurface( screen );		
+}
+
+void Game::maingame(){
+		screen = SDL_GetWindowSurface(gWindow);
+		rules_called = false;
+		maingame_called = true;
+		SDL_FreeSurface( screen );		
+}
 
 bool Game::init()
 {
@@ -50,7 +64,11 @@ bool Game::init()
 					printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
 					success = false;
 				}
-
+				if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
+				{
+					printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
+					success = false;
+				}
 			}
 		}
 	}
@@ -63,13 +81,19 @@ bool Game::loadMedia()
 	//Loading success flag
 	bool success = true;
 	
-	assets = loadTexture("assets4.png");
+	assets = loadTexture("assets.png");
     gTexture = loadTexture("bgDay.jpg");
 	if(assets==NULL || gTexture==NULL)
     {
         printf("Unable to run due to error: %s\n",SDL_GetError());
         success =false;
     }
+	bgMusic = Mix_LoadMUS( "beat.wav" );
+
+	if(bgMusic == NULL){
+		printf("Unable to load music: %s \n", Mix_GetError());
+		success = false;
+	}
 
 	return success;
 }
@@ -86,8 +110,11 @@ void Game::close()
 	SDL_DestroyWindow( gWindow );
 	gWindow = NULL;
 	gRenderer = NULL;
-	//Quit SDL subsystems
+	Mix_FreeMusic(bgMusic);
+	bgMusic = NULL;
+	// Quit SDL subsystems
 	IMG_Quit();
+	Mix_Quit();
 	SDL_Quit();
 }
 
@@ -118,6 +145,47 @@ SDL_Texture* Game::loadTexture( std::string path )
 	return newTexture;
 }
 
+void Game::write(std::string keychar)
+{
+	cur_time = time(0) - start_time;
+
+	int length_text, length_sentence, wpm, accuracy;
+	int mistakes = 0;
+	std::string text = "";
+	cout << endl;
+	//length_sentence = sentence.length();
+	time_t start;
+	cur_string += keychar;
+	time_t end;
+	string input;
+	//cur_string += keychar;
+	input = text + cur_string;
+
+	//input = cur_time + "\n" + input;
+
+	TTF_Init();
+
+	TTF_Font *font = TTF_OpenFont("arial.ttf", 25);
+	SDL_Color color = {0, 0, 0};
+	SDL_Surface *surface = TTF_RenderText_Solid(font,
+												input.c_str(), color);
+	SDL_Texture *texture = SDL_CreateTextureFromSurface(gRenderer, surface);
+
+	//cout << wpm << endl;
+	//accuracy = 100 - ((mistakes / length_text) * 100);
+
+	int texW = 10;
+	int texH = 10;
+	SDL_QueryTexture(texture, NULL, NULL, &texW, &texH);
+	SDL_Rect dstrect = {0, 50, texW, texH};
+
+	SDL_RenderCopy(gRenderer, texture, NULL, &dstrect);
+
+	SDL_DestroyTexture(texture);
+	SDL_FreeSurface(surface);
+	TTF_CloseFont(font);
+	TTF_Quit();
+}
 
 void Game::run( )
 {
@@ -128,6 +196,7 @@ void Game::run( )
 	while( !quit )
 	{
 		//Handle events on queue
+		// write("5");
 		while( SDL_PollEvent( &e ) != 0 )
 		{
 
@@ -144,16 +213,24 @@ void Game::run( )
 				// if (xMouse >= )
 				// gTexture = loadTexture("hulogo.png");
 				CrazyTaxi.createObject(xMouse, yMouse);
+				if (xMouse>100 && xMouse<375 && yMouse>350 && yMouse<470) maingame();
+				if (xMouse>660 && xMouse<930 && yMouse>375 && yMouse<470) rules();
 			}
-
-			if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_RIGHT){
-				CrazyTaxi.rightArrow();
+			else if (e.type == SDL_KEYDOWN){
+				if (e.key.keysym.sym == SDLK_RIGHT)
+					CrazyTaxi.rightArrow();
+			
+				if (e.key.keysym.sym == SDLK_LEFT)
+					CrazyTaxi.leftArrow();
 			}
-			if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_LEFT){
-				CrazyTaxi.leftArrow();
-			}
+		
 		}
-		CrazyTaxi.probObjects();
+		if( Mix_PlayingMusic() == 0 )
+		{
+			//Play the music
+			Mix_PlayMusic( bgMusic, 2 );
+		}
+		// CrazyTaxi.probObjects();
 		if (CrazyTaxi.s1.n == 0 && day == 1){
 			gTexture = loadTexture("bgDay.jpg");
 			day = 0;
@@ -167,14 +244,39 @@ void Game::run( )
 		SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);//Draws background to renderer
 		//***********************draw the objects here********************
 		// CrazyTaxi.draw();
-		CrazyTaxi.drawObjects();
+		// CrazyTaxi.drawObjects();
+		if (maingame_called==false && rules_called==false){
+			CrazyTaxi.drawLogo();
+			CrazyTaxi.drawStart();
+			CrazyTaxi.drawRules();
+		}
+
+		else if (maingame_called==true && rules_called==false){
+			CrazyTaxi.drawObjects();
+			CrazyTaxi.probObjects();
+			if (CrazyTaxi.stats())
+				break;
+	        
+		} 
+		else if (rules_called==true && maingame_called==false) {
+			CrazyTaxi.drawInstructions();
+			CrazyTaxi.drawBack();
+
+			if (e.type == SDL_MOUSEBUTTONDOWN){
+				int xMouse, yMouse;
+				SDL_GetMouseState(&xMouse,&yMouse);
+				if (xMouse>50 && xMouse<200 && yMouse>100 && yMouse<200){
+					rules_called=false;
+					maingame_called=false;
+				} 
+			}
+		}
 		//****************************************************************
     	SDL_RenderPresent(gRenderer); //displays the updated renderer
 
 	    SDL_Delay(50);	//causes sdl engine to delay for specified miliseconds
-		if (CrazyTaxi.stats())
-			break;
 	}
 	// delete CrazyTaxi;	
-	CrazyTaxi.deleteObj();	
+	CrazyTaxi.deleteObj();
+
 }

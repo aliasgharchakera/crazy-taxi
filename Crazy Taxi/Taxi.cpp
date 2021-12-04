@@ -1,7 +1,7 @@
 #include "Taxi.hpp"    
 
     Taxi::Taxi(SDL_Renderer* rend, SDL_Texture* ast, SDL_Rect mov): Unit(rend, ast), mover(mov){
-        src = {531, 1, 102, 85};
+        src = {485, 312, 102, 85};
     }
 // drawing animations when the bullet hits the right edge
     void Taxi::draw(){

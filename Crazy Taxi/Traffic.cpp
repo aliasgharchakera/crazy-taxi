@@ -1,15 +1,26 @@
 #include "Traffic.hpp"
 
     Traffic::Traffic(SDL_Renderer* rend, SDL_Texture* ast, SDL_Rect mov): Unit(rend, ast), mover(mov){
-        int p = rand () % 3 + 1;
+        int p = rand () % 8 + 1;
         switch(p){
-            case 1: src = {188, 94, 80, 45};
+            case 1: src = {847, 716, 80, 45};
             break;
-            case 2: src = {188, 141, 80, 45};
+            case 2: src = {929, 716, 80, 45};
             break;
-            case 3: src = {188, 188, 80, 45};
+            case 3: src = {847, 763, 80, 45};
             break;
-            // case 2: src = {1559, 2, 632, 640};
+            case 4: src = {1219, 716, 80, 45};
+            break;
+            case 5: src = {1017, 312, 200, 116};
+            break;
+            case 6: src = {1, 614, 240, 194};
+            break;
+            case 7: src = {1, 312, 240, 194};
+            break;
+            case 8: src = {243, 312, 240, 194};
+            break;
+            case 9: src = {1301, 716, 80, 45};
+            break;
         } 
     }
 
@@ -57,14 +68,14 @@
         return false;
     }
 // defining the animation function
-    void Traffic::animation(int n){
-        switch (n){
-        case 0: src = {1559, 1, 632, 640};
-        mover.w = 50; mover.h = 50;
-        mover.x = 1000;
-        mover.y = 50;
-        break;
-        case 1: mover.w += 2; mover.h += 2;
-        break;
-        }
-    }
+    // void Traffic::animation(int n){
+    //     switch (n){
+    //     case 0: src = {1559, 1, 632, 640};
+    //     mover.w = 50; mover.h = 50;
+    //     mover.x = 1000;
+    //     mover.y = 50;
+    //     break;
+    //     case 1: mover.w += 2; mover.h += 2;
+    //     break;
+    //     }
+    // }

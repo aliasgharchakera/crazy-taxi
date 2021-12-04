@@ -1,27 +1,40 @@
 #include "Obstacle.hpp"    
 
     Obstacle::Obstacle(SDL_Renderer* rend, SDL_Texture* ast, SDL_Rect mov): Unit(rend, ast), mover(mov){
-        src = {1559, 2, 632, 640};
+        src = {1017, 110, 200, 200};
     }
 // drawing animations when the bullet hits the right edge
     void Obstacle::draw(){
-        if (p%10 == 0){
-            if (mover.x == 0){
-                    if (n == 1)
-                        n = 0;
-                    else
-                        n++;
-                    animation(n);
-            }
-            else{
-                mover.x-=10;
-                if (mover.x < 500)
-                    mover.y += 1;
-                else
-                    mover.y -= 1;
-            }
+        if (n == 10)
+            n = 0;
+        else{
+            mover.w += 1; mover.h += 1;
+            n++;
         }
-        p++;
+
+        if (mover.y > 320)
+            if (mover.y > 350)
+                mover.y += 2;
+            mover.y += 2;
+        if (mover.x > 500){
+            int x = rand () % 4 + 1;
+            if (x == 1)
+                mover.x += 2;
+            else if (x == 2)
+                mover.x += 4;
+            else if (x == 3)
+                mover.x += 8;
+        }
+        else{
+            int x = rand () % 4 + 1;
+            if (x == 1)
+                mover.x -= 2;
+            else if (x == 2)
+                mover.x -= 4;
+            else if (x == 3)
+                mover.x -= 8;
+        }
+        mover.y += 1;
         Unit::draw(src, mover);
     }
 
