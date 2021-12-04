@@ -11,6 +11,8 @@
 #include "rules_button.hpp"
 #include "logo.hpp"
 #include "back_button.hpp"
+#include "restart_button.hpp"
+#include "end_game.hpp"
 #include<list>
 using namespace std;
 class CrazyTaxi{
@@ -19,6 +21,8 @@ class CrazyTaxi{
     logo l1;
     rules r;
     back_button b;
+    restart_button b2;
+    End_Game e1;
     // list<Taxi*> taxis;
     SDL_Renderer *gRenderer;
     SDL_Texture *assets;
@@ -39,10 +43,11 @@ class CrazyTaxi{
     // ~CrazyTaxi();
     void drawStart();
     void drawBack();
+    void drawRestart();
     void drawRules();
     void drawInstructions();
     void drawLogo();
-
+    void drawEnd();
     void drawObjects();
     void createObject(int x, int y);
     void createObstacles();

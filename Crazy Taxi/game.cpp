@@ -5,6 +5,8 @@ Mix_Music *bgMusic = NULL;
 Mix_Music *menuMusic = NULL;
 Mix_Chunk *gCrash = NULL;
 Mix_Chunk *gGameOver = NULL;
+Mix_Chunk *gTaxiStart = NULL;
+Mix_Chunk *gTaxiHorn = NULL;
 void Game::rules(){
 		screen = SDL_GetWindowSurface(gWindow);
 		rules_called = true;
@@ -107,6 +109,18 @@ bool Game::loadMedia()
         printf( "Failed to load crash sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
         success = false;
     }
+	gTaxiStart = Mix_LoadWAV( "start.wav" );
+    if( gTaxiStart == NULL )
+    {
+        printf( "Failed to load crash sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
+        success = false;
+    }
+	gTaxiHorn = Mix_LoadWAV( "horn.wav" );
+    if( gTaxiHorn == NULL )
+    {
+        printf( "Failed to load crash sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
+        success = false;
+    }
 
 	return success;
 }
@@ -131,8 +145,12 @@ void Game::close()
 	//Free the sound effects
     Mix_FreeChunk( gCrash );
     Mix_FreeChunk( gGameOver );
+	Mix_FreeChunk( gTaxiStart );
+	Mix_FreeChunk( gTaxiHorn );
     gCrash = NULL;
     gGameOver = NULL;
+	gTaxiStart = NULL;
+	gTaxiHorn = NULL;
 
 	// Quit SDL subsystems
 	IMG_Quit();
@@ -238,6 +256,7 @@ void Game::run( )
 				if (xMouse>100 && xMouse<375 && yMouse>350 && yMouse<470){
 					maingame();
 					Mix_PauseMusic();
+					Mix_PlayChannel( -1, gTaxiStart, 0);
 					Mix_PlayMusic( bgMusic, 2 );
 				}
 				if (xMouse>660 && xMouse<930 && yMouse>375 && yMouse<470) rules();
@@ -248,6 +267,8 @@ void Game::run( )
 			
 				if (e.key.keysym.sym == SDLK_LEFT)
 					CrazyTaxi.leftArrow();
+				if (e.key.keysym.sym == SDLK_f)
+					Mix_PlayChannel( -1, gTaxiHorn, 0);
 			}
 		
 		}
@@ -277,20 +298,20 @@ void Game::run( )
 			}
 		}
 
-		else if (maingame_called==true && rules_called==false){
+		else if (maingame_called==true && rules_called==false && restartgame_called == false){
 			if (Mix_PlayingMusic() == 0)
-				Mix_PlayMusic( menuMusic, 2 );
+				Mix_PlayMusic( bgMusic, 2 );
 			CrazyTaxi.drawObjects();
 			if (CrazyTaxi.crashed){
 				Mix_PlayChannel( -1, gCrash, 0 );
 				CrazyTaxi.crashed = false;
 			}
 			CrazyTaxi.probObjects();
-			if (CrazyTaxi.stats())
-				break;
-	        
+			if (CrazyTaxi.stats()){
+				maingame_called = false; restartgame_called = true;
+			}
 		} 
-		else if (rules_called==true && maingame_called==false) {
+		else if (rules_called==true && maingame_called==false && restartgame_called == false) {
 			CrazyTaxi.drawInstructions();
 			CrazyTaxi.drawBack();
 
@@ -300,6 +321,18 @@ void Game::run( )
 				if (xMouse>50 && xMouse<200 && yMouse>100 && yMouse<200){
 					rules_called=false;
 					maingame_called=false;
+				} 
+			}
+		}
+		else if (restartgame_called == true && maingame_called == false && rules_called == false){
+			CrazyTaxi.drawEnd();
+			CrazyTaxi.drawRestart();
+			if (e.type == SDL_MOUSEBUTTONDOWN){
+				int xMouse, yMouse;
+				SDL_GetMouseState(&xMouse,&yMouse);
+				if (xMouse>50 && xMouse<200 && yMouse>100 && yMouse<200){
+					restartgame_called=false;
+					maingame_called=true;
 				} 
 			}
 		}

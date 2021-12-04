@@ -39,6 +39,7 @@ public:
     
     bool rules_called;
     bool maingame_called;
+    bool restartgame_called;
     void rules();
     void maingame();
 

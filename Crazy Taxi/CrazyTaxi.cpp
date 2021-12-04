@@ -61,7 +61,7 @@ void CrazyTaxi::drawObjects(){
 }
 
 CrazyTaxi::CrazyTaxi(SDL_Renderer *renderer, SDL_Texture *asst):gRenderer(renderer), assets(asst){
-    SDL_Rect mov = {5, 50, 30, 30};
+    SDL_Rect mov = {5, 100, 30, 30};
     for (int i = 0; i < 5; i++){
         mov.x += 32;
         Lives* l1 = new Lives(gRenderer, assets, mov);
@@ -74,11 +74,17 @@ CrazyTaxi::CrazyTaxi(SDL_Renderer *renderer, SDL_Texture *asst):gRenderer(render
 void CrazyTaxi::drawBack(){
     b.draw(gRenderer, assets);
 }
+void CrazyTaxi::drawRestart(){
+    b2.draw(gRenderer, assets);
+}
 void CrazyTaxi::drawInstructions(){
     r.draw(gRenderer, assets);
 }
 void CrazyTaxi::drawStart(){
     p1.draw(gRenderer, assets);
+}
+void CrazyTaxi::drawEnd(){
+    e1.draw(gRenderer, assets);
 }
 void CrazyTaxi::drawRules(){
     p2.draw(gRenderer, assets);
