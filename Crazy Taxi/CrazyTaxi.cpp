@@ -105,7 +105,7 @@ void CrazyTaxi::leftArrow(){
 }
 
 void CrazyTaxi::createObject(int x, int y){
-    std::cout<<"Mouse clicked at: "<<x<<" -- "<<y<<std::endl;
+    // std::cout<<"Mouse clicked at: "<<x<<" -- "<<y<<std::endl;
 }
 
 void CrazyTaxi::createTraffic(){
@@ -200,5 +200,5 @@ void CrazyTaxi::deleteObj(){
     for (auto& o: obstacles)
         delete o;
     obstacles.clear();
-    cout << "delete called" << endl;
+    // cout << "delete called" << endl;
 }

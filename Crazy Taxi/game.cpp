@@ -336,7 +336,7 @@ void Game::run( )
 			if (e.type == SDL_MOUSEBUTTONDOWN){
 				int xMouse, yMouse;
 				SDL_GetMouseState(&xMouse,&yMouse);
-				if (xMouse>425 && xMouse<695 && yMouse>400 && yMouse<495){
+				if (xMouse>365 && xMouse<635 && yMouse>400 && yMouse<495){
 					restartgame_called=false;
 					maingame_called=false;
 					break;

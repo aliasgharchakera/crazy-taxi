@@ -23,5 +23,5 @@ restart_button::restart_button(){
     srcRect = {1,896,300,112};
 
     // it will display pigeon on x = 30, y = 40 location, the size of pigeon is 50 width, 60 height
-    moverRect = {425, 400, 270, 95};
+    moverRect = {365, 400, 270, 95};
 }
