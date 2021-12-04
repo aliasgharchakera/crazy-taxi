@@ -7,6 +7,7 @@ Mix_Chunk *gCrash = NULL;
 Mix_Chunk *gGameOver = NULL;
 Mix_Chunk *gTaxiStart = NULL;
 Mix_Chunk *gTaxiHorn = NULL;
+Mix_Chunk *gClick = NULL;
 void Game::rules(){
 		screen = SDL_GetWindowSurface(gWindow);
 		rules_called = true;
@@ -41,7 +42,7 @@ bool Game::init()
 		}
 
 		//Create window
-		gWindow = SDL_CreateWindow( "Star Wars", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+		gWindow = SDL_CreateWindow( "Crazy Taxi", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
 		if( gWindow == NULL )
 		{
 			printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
@@ -121,6 +122,18 @@ bool Game::loadMedia()
         printf( "Failed to load crash sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
         success = false;
     }
+	gGameOver = Mix_LoadWAV( "gameOver.wav" );
+    if( gGameOver == NULL )
+    {
+        printf( "Failed to load crash sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
+        success = false;
+    }
+	gClick = Mix_LoadWAV( "click.wav" );
+    if( gClick == NULL )
+    {
+        printf( "Failed to load crash sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
+        success = false;
+    }
 
 	return success;
 }
@@ -147,6 +160,8 @@ void Game::close()
     Mix_FreeChunk( gGameOver );
 	Mix_FreeChunk( gTaxiStart );
 	Mix_FreeChunk( gTaxiHorn );
+	Mix_FreeChunk( gClick );
+    gClick = NULL;
     gCrash = NULL;
     gGameOver = NULL;
 	gTaxiStart = NULL;
@@ -254,12 +269,16 @@ void Game::run( )
 				// gTexture = loadTexture("hulogo.png");
 				CrazyTaxi.createObject(xMouse, yMouse);
 				if (xMouse>100 && xMouse<375 && yMouse>350 && yMouse<470){
+					Mix_PlayChannel( -1, gClick, 0);
 					maingame();
 					Mix_PauseMusic();
 					Mix_PlayChannel( -1, gTaxiStart, 0);
 					Mix_PlayMusic( bgMusic, 2 );
 				}
-				if (xMouse>660 && xMouse<930 && yMouse>375 && yMouse<470) rules();
+				if (xMouse>660 && xMouse<930 && yMouse>375 && yMouse<470){
+					Mix_PlayChannel( -1, gClick, 0);
+					rules();
+				}
 			}
 			else if (e.type == SDL_KEYDOWN){
 				if (e.key.keysym.sym == SDLK_RIGHT)
@@ -310,6 +329,8 @@ void Game::run( )
 			if (CrazyTaxi.gameOver){
 				maingame_called = false; restartgame_called = true;
 				CrazyTaxi.gameOver = false;
+				Mix_PlayChannel( -1, gGameOver, 0 );
+				Mix_PauseMusic();
 				cout << "----------GAME OVER----------" << endl;
 				cout << "Points: " << CrazyTaxi.points << endl;
 			}
@@ -325,6 +346,7 @@ void Game::run( )
 				int xMouse, yMouse;
 				SDL_GetMouseState(&xMouse,&yMouse);
 				if (xMouse>50 && xMouse<200 && yMouse>100 && yMouse<200){
+					Mix_PlayChannel( -1, gClick, 0);
 					rules_called=false;
 					maingame_called=false;
 				} 
@@ -337,6 +359,7 @@ void Game::run( )
 				int xMouse, yMouse;
 				SDL_GetMouseState(&xMouse,&yMouse);
 				if (xMouse>365 && xMouse<635 && yMouse>400 && yMouse<495){
+					Mix_PlayChannel( -1, gClick, 0);
 					restartgame_called=false;
 					maingame_called=false;
 					break;

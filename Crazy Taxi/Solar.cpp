@@ -36,7 +36,7 @@
         mover.w = 45; mover.h = 45;
         mover.x = 1000;
         mover.y = 50;
-        cout << "moon time" << endl;
+        // cout << "moon time" << endl;
         break;
         }
     }
