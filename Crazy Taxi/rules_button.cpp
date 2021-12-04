@@ -20,7 +20,7 @@ void rules_button::animate(){
 
 rules_button::rules_button(){
     // src coorinates from assets.png file, they have been found using spritecow.com
-    srcRect = {243,802,300,93};
+    srcRect = {1,1065,300,93};
 
     // it will display pigeon on x = 30, y = 40 location, the size of pigeon is 50 width, 60 height
     moverRect = {660, 375, 270, 95};

@@ -85,7 +85,7 @@ bool Game::loadMedia()
 	//Loading success flag
 	bool success = true;
 	
-	assets = loadTexture("assets.png");
+	assets = loadTexture("assets5.png");
     gTexture = loadTexture("bgDay.jpg");
 	if(assets==NULL || gTexture==NULL)
     {
@@ -336,7 +336,7 @@ void Game::run( )
 			if (e.type == SDL_MOUSEBUTTONDOWN){
 				int xMouse, yMouse;
 				SDL_GetMouseState(&xMouse,&yMouse);
-				if (xMouse>425 && xMouse<575 && yMouse>400 && yMouse<500){
+				if (xMouse>425 && xMouse<695 && yMouse>400 && yMouse<495){
 					restartgame_called=false;
 					maingame_called=false;
 					break;

@@ -1,25 +1,25 @@
 #include "Traffic.hpp"
 
     Traffic::Traffic(SDL_Renderer* rend, SDL_Texture* ast, SDL_Rect mov): Unit(rend, ast), mover(mov){
-        int p = rand () % 8 + 1;
+        int p = rand () % 9 + 1;
         switch(p){
-            case 1: src = {847, 716, 80, 45};
+            case 1: src = {281, 660, 80, 45}; //green car
             break;
-            case 2: src = {929, 716, 80, 45};
+            case 2: src = {363, 660, 80, 45}; //pruple car
             break;
-            case 3: src = {847, 763, 80, 45};
+            case 3: src = {383, 707, 80, 45}; //yellow car
             break;
-            case 4: src = {1219, 716, 80, 45};
+            case 4: src = {1391, 613, 80, 45}; //blue car
             break;
-            case 5: src = {1017, 312, 200, 116};
+            case 5: src = {1391, 660, 80, 45}; //red car
             break;
-            case 6: src = {1, 614, 240, 194};
+            case 6: src = {243, 312, 240, 194}; //lime car
             break;
-            case 7: src = {1, 312, 240, 194};
+            case 7: src = {1, 312, 240, 194}; //blue car
             break;
-            case 8: src = {243, 312, 240, 194};
+            case 8: src = {281, 524, 200, 116}; //pink car
             break;
-            case 9: src = {1301, 716, 80, 45};
+            case 9: src = {1017, 312, 240, 194}; //red car2
             break;
         } 
     }

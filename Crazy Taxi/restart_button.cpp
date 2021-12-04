@@ -20,8 +20,8 @@ void restart_button::animate(){
 
 restart_button::restart_button(){
     // src coorinates from assets.png file, they have been found using spritecow.com
-    srcRect = {243,802,300,93};
+    srcRect = {1,896,300,112};
 
     // it will display pigeon on x = 30, y = 40 location, the size of pigeon is 50 width, 60 height
-    moverRect = {425, 400, 150, 100};
+    moverRect = {425, 400, 270, 95};
 }

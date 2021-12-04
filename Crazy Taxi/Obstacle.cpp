@@ -1,7 +1,13 @@
 #include "Obstacle.hpp"    
 
     Obstacle::Obstacle(SDL_Renderer* rend, SDL_Texture* ast, SDL_Rect mov): Unit(rend, ast), mover(mov){
-        src = {1017, 110, 200, 200};
+        int p = rand () % 2 + 1;
+        switch(p){
+            case 1: src = {28, 1339, 151, 177};
+            break;
+            case 2: src = {1017, 110, 200, 200};
+            break;
+        }
     }
 // drawing animations when the bullet hits the right edge
     void Obstacle::draw(){

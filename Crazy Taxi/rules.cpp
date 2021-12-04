@@ -9,6 +9,6 @@ void rules::draw(SDL_Renderer* gRenderer, SDL_Texture* assets){
 }
 
 rules::rules(){
-    srcRect = {847,810,564,463};
+    srcRect = {303,1065,564,463};
     moverRect = {290, 80, 400, 400};
 }

@@ -1,7 +1,13 @@
 #include "Tree.hpp"    
 
     Tree::Tree(SDL_Renderer* rend, SDL_Texture* ast, SDL_Rect mov): Unit(rend, ast), mover(mov){
-        src = {545, 614, 300, 449};
+        int p = rand () % 2 + 1;
+        switch(p){
+            case 1: src = {785, 614, 300, 449};
+            break;
+            case 2: src = {1087, 524, 200, 370};
+            break;
+        }
     }
 // drawing animations when the bullet hits the right edge
     void Tree::draw(){

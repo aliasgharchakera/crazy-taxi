@@ -11,7 +11,7 @@ void End_Game::draw(SDL_Renderer* gRenderer, SDL_Texture* assets){
 
 End_Game::End_Game(){
     // src coorinates from assets.png file, they have been found using spritecow.com
-    srcRect = {267,619,243,91};
+    srcRect = {74,672,133,75};
 
     // it will display pigeon on x = 30, y = 40 location, the size of pigeon is 50 width, 60 height
     moverRect = {300, 80, 400, 200};

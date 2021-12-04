@@ -20,7 +20,7 @@ void Start_Game::animate(){
 
 Start_Game::Start_Game(){
     // src coorinates from assets.png file, they have been found using spritecow.com
-    srcRect = {267,619,243,91};
+    srcRect = {507,619,243,91};
 
     // it will display pigeon on x = 30, y = 40 location, the size of pigeon is 50 width, 60 height
     moverRect = {100, 350, 275, 120};
