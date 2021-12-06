@@ -335,6 +335,7 @@ void Game::run( )
 			CrazyTaxi.probObjects();
 			CrazyTaxi.drawObjects();
 			if (CrazyTaxi.crashed){
+				--CrazyTaxi;
 				// playing the crashing sound
 				Mix_PlayChannel( -1, gCrash, 0 );
 				CrazyTaxi.crashed = false;

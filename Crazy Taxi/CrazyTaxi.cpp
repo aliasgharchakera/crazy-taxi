@@ -1,6 +1,7 @@
 #include "CrazyTaxi.hpp"
 #include<iostream>
 
+// void friend CrazyTaxi::operator --();
 // drawing all the objects in the game
 void CrazyTaxi::drawObjects(){
     s1.draw();
@@ -17,10 +18,10 @@ void CrazyTaxi::drawObjects(){
             if (SDL_HasIntersection((v->getMover()), (t1.getMover()))){
                 // cout << "crashed" << endl;
                 lives_2--;
-                lives.pop_back();
+                // lives.pop_back();
                 crashed = true;
                 // clearing the screen if lives are left
-                if (lives_2 > 0){
+                if (lives_2){
                     deleteObj();
                     t1 = {gRenderer, assets, {500, 500, 70, 95}};
                 }
@@ -61,10 +62,10 @@ void CrazyTaxi::drawObjects(){
             if (SDL_HasIntersection((o->getMover()), (t1.getMover()))){
                 // cout << "crashed" << endl;
                 lives_2--;
-                lives.pop_back();
+                // lives.pop_back();
                 crashed = true;
                 // clearing the screen if lives are left
-                if (lives_2 > 0){
+                if (lives_2){
                     deleteObj();
                     t1 = {gRenderer, assets, {500, 500, 70, 95}};
                 }

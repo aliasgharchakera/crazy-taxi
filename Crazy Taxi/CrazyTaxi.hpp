@@ -69,4 +69,8 @@ class CrazyTaxi{
     void endGame();
     void livesLeft();
     // string getPoints();
+    // operator overloaded
+    void operator --(){
+        lives.pop_back();
+    }
 };
