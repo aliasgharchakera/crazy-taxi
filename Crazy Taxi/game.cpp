@@ -1,6 +1,7 @@
 #include "game.hpp"
 #include "CrazyTaxi.hpp"
 #include<vector>
+// declaring pointers for audio
 Mix_Music *bgMusic = NULL;
 Mix_Music *menuMusic = NULL;
 Mix_Chunk *gCrash = NULL;
@@ -8,13 +9,14 @@ Mix_Chunk *gGameOver = NULL;
 Mix_Chunk *gTaxiStart = NULL;
 Mix_Chunk *gTaxiHorn = NULL;
 Mix_Chunk *gClick = NULL;
+// displaying the rules window
 void Game::rules(){
 		screen = SDL_GetWindowSurface(gWindow);
 		rules_called = true;
 		maingame_called==false;
 		SDL_FreeSurface( screen );		
 }
-
+// displaying the main window
 void Game::maingame(){
 		screen = SDL_GetWindowSurface(gWindow);
 		rules_called = false;
@@ -85,7 +87,7 @@ bool Game::loadMedia()
 {
 	//Loading success flag
 	bool success = true;
-	
+	// loading the asset and bg images
 	assets = loadTexture("assets5.png");
     gTexture = loadTexture("bgDay.jpg");
 	if(assets==NULL || gTexture==NULL)
@@ -93,6 +95,7 @@ bool Game::loadMedia()
         printf("Unable to run due to error: %s\n",SDL_GetError());
         success =false;
     }
+	// loading the audio files
 	bgMusic = Mix_LoadMUS( "wackyrace.wav" );
 	if(bgMusic == NULL){
 		printf("Unable to load music: %s \n", Mix_GetError());
@@ -199,7 +202,7 @@ SDL_Texture* Game::loadTexture( std::string path )
 
 	return newTexture;
 }
-
+// write function to display the points on the SDL window
 void Game::write(std::string keychar)
 {
 	cur_time = time(0) - start_time;
@@ -262,19 +265,21 @@ void Game::run( )
 			}
 
 			if(e.type == SDL_MOUSEBUTTONDOWN){
-			//this is a good location to add pigeon in linked list.
 				int xMouse, yMouse;
 				SDL_GetMouseState(&xMouse,&yMouse);
 				// if (xMouse >= )
 				// gTexture = loadTexture("hulogo.png");
 				CrazyTaxi.createObject(xMouse, yMouse);
+				// Start game has been clicked
 				if (xMouse>100 && xMouse<375 && yMouse>350 && yMouse<470){
 					Mix_PlayChannel( -1, gClick, 0);
 					maingame();
 					Mix_PauseMusic();
 					Mix_PlayChannel( -1, gTaxiStart, 0);
 					Mix_PlayMusic( bgMusic, 2 );
+					// Mix_VolumeMusic(10);
 				}
+				// Rules have been clicked
 				if (xMouse>660 && xMouse<930 && yMouse>375 && yMouse<470){
 					Mix_PlayChannel( -1, gClick, 0);
 					rules();
@@ -282,16 +287,20 @@ void Game::run( )
 			}
 			else if (e.type == SDL_KEYDOWN){
 				if (e.key.keysym.sym == SDLK_RIGHT)
+				// taxi moves right
 					CrazyTaxi.rightArrow();
 			
 				if (e.key.keysym.sym == SDLK_LEFT)
+				// taxi moves left
 					CrazyTaxi.leftArrow();
 				if (e.key.keysym.sym == SDLK_f)
+				// the car horn honks
 					Mix_PlayChannel( -1, gTaxiHorn, 0);
 			}
 		
 		}
 		// CrazyTaxi.probObjects();
+		// changing the bg according to the location of the solar object
 		if (CrazyTaxi.s1.n == 0 && day == 1){
 			gTexture = loadTexture("bgDay.jpg");
 			day = 0;
@@ -306,6 +315,7 @@ void Game::run( )
 		//***********************draw the objects here********************
 		// CrazyTaxi.draw();
 		// CrazyTaxi.drawObjects();
+		// drawing the main menu window and playing the music
 		if (maingame_called==false && rules_called==false && restartgame_called == false){
 			CrazyTaxi.drawLogo();
 			CrazyTaxi.drawStart();
@@ -314,18 +324,22 @@ void Game::run( )
 			{
 				//Play the music
 				Mix_PlayMusic( menuMusic, 2 );
+				// Mix_VolumeMusic(10);
 			}
 		}
-
+		// drawing the main game window and playing the music
 		else if (maingame_called==true && rules_called==false && restartgame_called == false){
 			if (Mix_PlayingMusic() == 0)
 				Mix_PlayMusic( bgMusic, 2 );
+				// Mix_VolumeMusic(10);
 			CrazyTaxi.probObjects();
 			CrazyTaxi.drawObjects();
 			if (CrazyTaxi.crashed){
+				// playing the crashing sound
 				Mix_PlayChannel( -1, gCrash, 0 );
 				CrazyTaxi.crashed = false;
 			}
+			// checking if the game is over 
 			if (CrazyTaxi.gameOver){
 				maingame_called = false; restartgame_called = true;
 				CrazyTaxi.gameOver = false;
@@ -338,6 +352,7 @@ void Game::run( )
 			// 	maingame_called = false; restartgame_called = true;
 			// }
 		} 
+		// drawing the rules window
 		else if (rules_called==true && maingame_called==false && restartgame_called == false) {
 			CrazyTaxi.drawInstructions();
 			CrazyTaxi.drawBack();
@@ -345,6 +360,7 @@ void Game::run( )
 			if (e.type == SDL_MOUSEBUTTONDOWN){
 				int xMouse, yMouse;
 				SDL_GetMouseState(&xMouse,&yMouse);
+				// going back to the main menu
 				if (xMouse>50 && xMouse<200 && yMouse>100 && yMouse<200){
 					Mix_PlayChannel( -1, gClick, 0);
 					rules_called=false;
@@ -352,6 +368,7 @@ void Game::run( )
 				} 
 			}
 		}
+		// drawing the exit window
 		else if (restartgame_called == true && maingame_called == false && rules_called == false){
 			CrazyTaxi.drawEnd();
 			CrazyTaxi.drawRestart();
@@ -372,6 +389,7 @@ void Game::run( )
 	    SDL_Delay(50);	//causes sdl engine to delay for specified miliseconds
 	}
 	// delete CrazyTaxi;
+	// deleting all the objects in the memory
 	CrazyTaxi.deleteObj();
 
 }

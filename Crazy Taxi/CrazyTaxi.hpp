@@ -1,3 +1,4 @@
+// including all the libraries and classes
 #include<SDL.h>
 #include "Solar.hpp"
 #include "Taxi.hpp"
@@ -31,6 +32,7 @@ class CrazyTaxi{
     list<Tree*> trees;
     list<StreetLight*> lights;
     list<Lives*> lives;
+    // intializing the taxi at the bottom center of the screen
     Taxi t1{gRenderer, assets, {465, 500, 75, 90}};
     int time = 30; int lives_2 = 5;
 
