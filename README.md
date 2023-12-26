@@ -44,7 +44,7 @@ a.exe
 **Right:** Night mode
 <div style="display: flex;">
     <img src="images/day-game.png" alt="Screenshot 1" width="50%">
-    <hr style="border: none; border-top: 1px solid #ccc; margin: 10px;">
+    <hr style="border: none; border-top: 1px solid #ccc; margin: 1%;">
     <img src="images/night-game.png" alt="Screenshot 2" width="50%">
 </div>
 
@@ -54,7 +54,7 @@ a.exe
 
 <div style="display: flex;">
     <img src="images/menu.png" alt="Screenshot 3" width="50%">
-    <hr style="border: none; border-top: 1px solid #ccc; margin: 10px;">
+    <hr style="border: none; border-top: 1px solid #ccc; margin: 1%;">
     <img src="images/rules.png" alt="Screenshot 4" width="50%">
 </div>
 
